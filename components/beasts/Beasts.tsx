@@ -93,20 +93,25 @@ export default function Beasts() {
         )}
         {data?.map((beast: Monster) => (
           <li key={beast.beastid}>
-            <Card>
-              <CardHeader>
-                <CardTitle>{beast.name}</CardTitle>
-                <CardDescription>#{beast.beastid}</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="w-20 h-20 grid items-center relative">
-                  <CardImage src={beast.images!.animated!} alt={beast.name!} />
-                </div>
-              </CardContent>
-              <CardFooter>
-                <Badge>{beast.type}</Badge>
-              </CardFooter>
-            </Card>
+            <Link href={`/beasts/${beast.name}`}>
+              <Card className="hover:border-indigo-600 hover:bg-indigo-600 hover:bg-opacity-30 hover:scale-105 transition">
+                <CardHeader>
+                  <CardTitle>{beast.name}</CardTitle>
+                  <CardDescription>#{beast.beastid}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="w-20 h-20 grid items-center relative">
+                    <CardImage
+                      src={beast.images!.animated!}
+                      alt={beast.name!}
+                    />
+                  </div>
+                </CardContent>
+                <CardFooter>
+                  <Badge>{beast.type}</Badge>
+                </CardFooter>
+              </Card>
+            </Link>
           </li>
         ))}
       </ul>
