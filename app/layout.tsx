@@ -31,7 +31,11 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Providers>{children}</Providers>
+          <Providers>
+            <main className="relative mx-auto my-0 w-full max-w-7xl flex flex-col px-4">
+              {children}
+            </main>
+          </Providers>
         </ThemeProvider>
       </body>
     </html>
