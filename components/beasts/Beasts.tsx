@@ -57,14 +57,14 @@ export default function Beasts() {
   const onQueryChange = useMemo(
     () =>
       debounce(({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
-        setQueryId(value || "");
         $queryId.set(value || "");
+        setQueryId($queryId.get());
       }, 300),
     []
   );
 
   return (
-    <main className="relative mx-auto my-0 w-full max-w-7xl flex flex-col">
+    <main className="relative mx-auto my-0 w-full max-w-7xl flex flex-col px-4">
       <div className="flex h-fit items-center justify-between">
         <div>
           <Link href="/" className="h-28 w-28 relative grid place-items-center">
