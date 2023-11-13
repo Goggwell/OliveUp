@@ -1,10 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { ThemeToggle } from "@/components/themeToggle";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useState, useMemo } from "react";
-import debounce from "lodash.debounce";
+import { useState, useEffect } from "react";
 import {
   Card,
   CardContent,
@@ -14,12 +12,11 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
 import { $beasts, $queryId } from "@/lib/store";
 import { CardSkeleton } from "@/components/cardSkeleton";
 import { CardImage } from "@/components/cardImage";
-import { Logo } from "@/components/logo";
 import { Monster } from "@/lib/types";
+import { useStore } from "@nanostores/react";
 
 export default function Beasts() {
   const queryClient = useQueryClient();
@@ -54,33 +51,14 @@ export default function Beasts() {
     queryClient
   );
 
-  const onQueryChange = useMemo(
-    () =>
-      debounce(({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
-        $queryId.set(value || "");
-        setQueryId($queryId.get());
-      }, 300),
-    []
-  );
+  const storedQueryId = useStore($queryId);
+
+  useEffect(() => {
+    setQueryId(storedQueryId);
+  }, [storedQueryId]);
 
   return (
     <>
-      <div className="flex h-fit items-center justify-between">
-        <div>
-          <Link href="/" className="h-28 w-28 relative grid place-items-center">
-            <Logo />
-          </Link>
-        </div>
-        <div className="flex gap-4">
-          <Input
-            type="search"
-            placeholder="Search..."
-            className="w-[100px] md:w-[200px] lg:w-[300px]"
-            onChange={onQueryChange}
-          />
-          <ThemeToggle />
-        </div>
-      </div>
       <ul className="grid gap-4 min-[470px]:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {(isLoading || isFetching || isRefetching || isPending) && (
           <>

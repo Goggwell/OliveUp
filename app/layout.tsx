@@ -1,6 +1,7 @@
+import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { cn } from "@/lib/utils";
+import { Navbar } from "@/components/navbar";
 import { Providers } from "@/components/providers";
 import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
@@ -33,6 +34,7 @@ export default function RootLayout({
         >
           <Providers>
             <main className="relative mx-auto my-0 w-full max-w-7xl flex flex-col px-4">
+              <Navbar />
               {children}
             </main>
           </Providers>
