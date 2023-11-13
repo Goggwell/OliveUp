@@ -36,3 +36,8 @@ export type Monster = {
   images: Images | null;
   cry: string | null;
 };
+
+export type HomeLink = {
+  url: string;
+  description: string;
+};
