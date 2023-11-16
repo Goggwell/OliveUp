@@ -29,7 +29,6 @@ export default function Beasts() {
   const { data, isLoading, isFetching, isPending, isRefetching } = useQuery(
     {
       queryKey: [`getBeasts/${queryId}`],
-      staleTime: 3600,
       networkMode: "offlineFirst",
       queryFn: async (arg) => {
         const cache = getFromCache(`getBeasts/${queryId}`);

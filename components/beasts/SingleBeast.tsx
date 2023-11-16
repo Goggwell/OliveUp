@@ -29,7 +29,6 @@ export default function SingleBeast({ name }: { name: string }) {
   const { data, isLoading, isFetching, isPending, isRefetching } = useQuery(
     {
       queryKey: [`getSingleBeast/${name}`],
-      staleTime: 3600,
       networkMode: "offlineFirst",
       queryFn: async (arg) => {
         const cache = getFromCache(`getSingleBeast/${name}`);

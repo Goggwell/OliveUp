@@ -19,7 +19,6 @@ export default async function BeastsPage() {
 
   await queryClient.prefetchQuery({
     queryKey: [`getBeasts/${$queryId.get()}`],
-    staleTime: 3600,
     networkMode: "offlineFirst",
     queryFn: async (arg) => {
       const cache = getFromCache(`getBeasts/${$queryId.get()}`);

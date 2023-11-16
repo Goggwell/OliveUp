@@ -22,7 +22,6 @@ export default async function SingleBeastPage({
 
   await queryClient.prefetchQuery({
     queryKey: [`getSingleBeast/${params.name}`],
-    staleTime: 3600,
     queryFn: async (arg) => {
       const cache = getFromCache(`getBeasts/${params.name}`);
       if (cache) return cache;
