@@ -8,7 +8,7 @@ import { links } from "@/lib/links";
 import Link from "next/link";
 
 export const runtime = "edge";
-export const revalidate = 60;
+export const revalidate = 1000 * 60 * 60 * 24;
 
 export default async function Home() {
   return (

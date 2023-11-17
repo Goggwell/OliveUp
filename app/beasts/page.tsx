@@ -8,7 +8,7 @@ import Beasts from "@/components/beasts/Beasts";
 import { Monster } from "@/lib/types";
 
 export const runtime = "edge";
-export const revalidate = 60;
+export const revalidate = 1000 * 60 * 60 * 24;
 
 export default async function BeastsPage() {
   const queryClient = new QueryClient();

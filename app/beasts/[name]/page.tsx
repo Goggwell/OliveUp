@@ -7,7 +7,7 @@ import SingleBeast from "@/components/beasts/SingleBeast";
 import { Monster } from "@/lib/types";
 
 export const runtime = "edge";
-export const revalidate = 3600;
+export const revalidate = 1000 * 60 * 60 * 24;
 
 export default async function SingleBeastPage({
   params,
