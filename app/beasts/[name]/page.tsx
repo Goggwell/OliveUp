@@ -27,7 +27,7 @@ export default async function SingleBeastPage({
       if (cache) return cache;
 
       const res = await fetch(
-        `https://hono-cassette-api.hono-beast-test.workers.dev/${
+        `https://hono-cassette-api.hono-beast-test.workers.dev/api/${
           arg.queryKey[0].split("/")[1]
         }`
       );

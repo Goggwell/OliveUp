@@ -28,7 +28,7 @@ export default async function BeastsPage() {
       }
 
       const res = await fetch(
-        `https://hono-cassette-api.hono-beast-test.workers.dev/${
+        `https://hono-cassette-api.hono-beast-test.workers.dev/api/${
           arg.queryKey[0].split("/")[1]
         }`
       );
