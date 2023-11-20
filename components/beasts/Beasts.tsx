@@ -50,7 +50,8 @@ export default function Beasts() {
     isPending,
     isRefetching,
   } = useInfiniteQuery({
-    queryKey: ["users"],
+    queryKey: [`getAllBeasts/${queryId}`],
+    networkMode: "offlineFirst",
     queryFn: getBeasts,
     initialPageParam: 0,
     getNextPageParam: (lastPage) => {
