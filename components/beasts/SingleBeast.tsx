@@ -35,7 +35,7 @@ export default function SingleBeast({ name }: { name: string }) {
         if (cache) return cache;
 
         const res = await fetch(
-          `https://hono-cassette-api.hono-beast-test.workers.dev/api/${
+          `https://hono-cassette-api.hono-beast-test.workers.dev/${
             arg.queryKey[0].split("/")[1]
           }`
         );
