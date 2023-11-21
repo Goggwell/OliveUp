@@ -2,7 +2,7 @@
 
 import { useState, ReactNode } from "react";
 import { compress, decompress } from "lz-string";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClient } from "@tanstack/react-query";
 import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
 import { createSyncStoragePersister } from "@tanstack/query-sync-storage-persister";
 
@@ -11,7 +11,7 @@ import { createSyncStoragePersister } from "@tanstack/query-sync-storage-persist
  * Compress stringified JSON since max storage is 5MB
  */
 const persister = createSyncStoragePersister({
-  storage: window.localStorage,
+  storage: typeof window === "undefined" ? undefined : window.localStorage,
   serialize: (data) => compress(JSON.stringify(data)),
   deserialize: (data) => JSON.parse(decompress(data)),
 });
