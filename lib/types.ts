@@ -37,7 +37,15 @@ export type Monster = {
   cry: string | null;
 };
 
+export type MonsterResponse = {
+  data: Monster[];
+};
+
 export type HomeLink = {
   url: string;
   description: string;
+};
+
+export type GetBeastsQuery = {
+  pageParam: number;
 };

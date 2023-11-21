@@ -24,10 +24,6 @@ export default function Beasts() {
   const [queryId, setQueryId] = useState<string>("");
   const { ref, inView } = useInView();
 
-  const getFromCache = (key: string) => {
-    return queryClient.getQueryData([key]);
-  };
-
   const getBeasts = async ({ pageParam = 0 }) => {
     const res = await fetch(
       `https://hono-cassette-api.hono-beast-test.workers.dev/${queryId}?offset=${pageParam}`
@@ -42,7 +38,6 @@ export default function Beasts() {
     hasNextPage,
     isLoading,
     isFetching,
-    isFetchingNextPage,
     isPending,
     isRefetching,
   } = useInfiniteQuery({
@@ -58,7 +53,7 @@ export default function Beasts() {
       return lastPage.prevOffset + 12;
     },
   });
-  const beasts = data?.pages.reduce((acc, page) => {
+  const beasts: Monster[] = data?.pages.reduce((acc, page) => {
     return [...acc, ...page.data];
   }, []);
 
@@ -70,7 +65,6 @@ export default function Beasts() {
 
   useEffect(() => {
     if (inView) fetchNextPage();
-    console.log(inView);
   }, [fetchNextPage, inView]);
 
   return (
@@ -85,7 +79,7 @@ export default function Beasts() {
             <CardSkeleton />
           </>
         )}
-        {beasts?.map((beast: Monster) => (
+        {beasts?.map((beast) => (
           <li key={beast.beastid} ref={beast.id === beasts.length ? ref : null}>
             <Link href={`/beasts/${beast.name}`}>
               <Card className="hover:border-indigo-600 hover:bg-indigo-600 hover:bg-opacity-30 hover:scale-105 transition">

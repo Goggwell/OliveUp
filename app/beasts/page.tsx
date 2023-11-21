@@ -3,9 +3,9 @@ import {
   HydrationBoundary,
   QueryClient,
 } from "@tanstack/react-query";
-import { $queryId, $beasts } from "@/lib/store";
+import { $queryId } from "@/lib/store";
 import Beasts from "@/components/beasts/Beasts";
-import { Monster } from "@/lib/types";
+import { MonsterResponse } from "@/lib/types";
 
 export const runtime = "edge";
 export const revalidate = 1000 * 60 * 60 * 24;
@@ -13,29 +13,19 @@ export const revalidate = 1000 * 60 * 60 * 24;
 export default async function BeastsPage() {
   const queryClient = new QueryClient();
 
-  const getFromCache = (key: string) => {
-    return queryClient.getQueryData([key]);
+  const getBeasts = async ({ pageParam = 0 }) => {
+    const res = await fetch(
+      `https://hono-cassette-api.hono-beast-test.workers.dev/${$queryId.get()}?offset=${pageParam}`
+    );
+    const data: MonsterResponse = await res.json();
+    return { ...data, prevOffset: pageParam };
   };
 
-  await queryClient.prefetchQuery({
+  await queryClient.prefetchInfiniteQuery({
     queryKey: [`getBeasts/${$queryId.get()}`],
     networkMode: "offlineFirst",
-    queryFn: async (arg) => {
-      const cache = getFromCache(`getBeasts/${$queryId.get()}`);
-      if (cache) {
-        $beasts.set(cache);
-        return cache;
-      }
-
-      const res = await fetch(
-        `https://hono-cassette-api.hono-beast-test.workers.dev/${
-          arg.queryKey[0].split("/")[1]
-        }`
-      );
-      const resJson: { data: Monster[] } = await res.json();
-      $beasts.set(resJson.data);
-      return resJson.data;
-    },
+    queryFn: getBeasts,
+    initialPageParam: 0,
   });
 
   return (
