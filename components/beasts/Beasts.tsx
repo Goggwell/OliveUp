@@ -1,11 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import {
-  useQuery,
-  useInfiniteQuery,
-  useQueryClient,
-} from "@tanstack/react-query";
+import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
 import { useState, useEffect } from "react";
 import {
   Card,
@@ -16,7 +12,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { $beasts, $queryId } from "@/lib/store";
+import { $queryId } from "@/lib/store";
 import { CardSkeleton } from "@/components/cardSkeleton";
 import { CardImage } from "@/components/cardImage";
 import { Monster } from "@/lib/types";
@@ -74,6 +70,7 @@ export default function Beasts() {
 
   useEffect(() => {
     if (inView) fetchNextPage();
+    console.log(inView);
   }, [fetchNextPage, inView]);
 
   return (
@@ -89,7 +86,7 @@ export default function Beasts() {
           </>
         )}
         {beasts?.map((beast: Monster) => (
-          <li key={beast.beastid}>
+          <li key={beast.beastid} ref={beast.id === beasts.length ? ref : null}>
             <Link href={`/beasts/${beast.name}`}>
               <Card className="hover:border-indigo-600 hover:bg-indigo-600 hover:bg-opacity-30 hover:scale-105 transition">
                 <CardHeader>
@@ -111,13 +108,6 @@ export default function Beasts() {
             </Link>
           </li>
         ))}
-        <li>
-          <Card ref={ref}>
-            <CardContent>
-              <p>{isFetchingNextPage && "fetching..."}</p>
-            </CardContent>
-          </Card>
-        </li>
       </ul>
     </>
   );
