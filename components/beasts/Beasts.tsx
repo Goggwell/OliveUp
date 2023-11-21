@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { useState, useEffect } from "react";
 import {
   Card,
@@ -20,7 +20,6 @@ import { useStore } from "@nanostores/react";
 import { useInView } from "react-intersection-observer";
 
 export default function Beasts() {
-  const queryClient = useQueryClient();
   const [queryId, setQueryId] = useState<string>("");
   const { ref, inView } = useInView();
 
@@ -64,7 +63,9 @@ export default function Beasts() {
   }, [storedQueryId]);
 
   useEffect(() => {
-    if (inView) fetchNextPage();
+    // add arr length conditional since it refetches query on refresh
+    if (inView && beasts.length !== 129) fetchNextPage();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fetchNextPage, inView]);
 
   return (
