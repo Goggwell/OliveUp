@@ -5,9 +5,10 @@ import {
 } from "@tanstack/react-query";
 import SingleBeast from "@/components/beasts/SingleBeast";
 import { Monster } from "@/lib/types";
+import { dayInMS } from "@/lib/utils";
 
 export const runtime = "edge";
-export const revalidate = 1000 * 60 * 60 * 24;
+export const revalidate = dayInMS;
 
 export default async function SingleBeastPage({
   params,

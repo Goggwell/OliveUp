@@ -1,5 +1,6 @@
 "use client";
 
+import { dayInMS } from "@/lib/utils";
 import { useState, ReactNode } from "react";
 import { compress, decompress } from "lz-string";
 import { QueryClient } from "@tanstack/react-query";
@@ -15,8 +16,6 @@ const persister = createSyncStoragePersister({
   serialize: (data) => compress(JSON.stringify(data)),
   deserialize: (data) => JSON.parse(decompress(data)),
 });
-
-const dayInMS = 1000 * 60 * 60 * 24;
 
 export function Providers(props: { children: ReactNode }) {
   const [queryClient] = useState(

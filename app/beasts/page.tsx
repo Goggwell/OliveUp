@@ -6,9 +6,10 @@ import {
 import { $queryId } from "@/lib/store";
 import Beasts from "@/components/beasts/Beasts";
 import { MonsterResponse } from "@/lib/types";
+import { dayInMS } from "@/lib/utils";
 
 export const runtime = "edge";
-export const revalidate = 1000 * 60 * 60 * 24;
+export const revalidate = dayInMS;
 
 export default async function BeastsPage() {
   const queryClient = new QueryClient();

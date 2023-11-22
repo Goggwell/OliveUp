@@ -6,9 +6,10 @@ import {
 } from "@/components/ui/card";
 import { links } from "@/lib/links";
 import Link from "next/link";
+import { dayInMS } from "@/lib/utils";
 
 export const runtime = "edge";
-export const revalidate = 1000 * 60 * 60 * 24;
+export const revalidate = dayInMS;
 
 export default async function Home() {
   return (
