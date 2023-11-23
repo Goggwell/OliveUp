@@ -1,12 +1,20 @@
 "use client";
 
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import dynamic from "next/dynamic";
+import { getFromCache } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { CardImage } from "@/components/cardImage";
 import { Monster, ParsedBaseStats } from "@/lib/types";
-import { getFromCache } from "@/lib/utils";
-import { ResponsiveRadar } from "@nivo/radar";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+
+const RadarChart = dynamic(
+  () => import("@/components/radarChart").then((mod) => mod.RadarChart),
+  {
+    loading: () => <p>Loading...</p>,
+    ssr: false,
+  }
+);
 
 export default function SingleBeast({ name }: { name: string }) {
   const queryClient = useQueryClient();
@@ -68,50 +76,7 @@ export default function SingleBeast({ name }: { name: string }) {
               <CardTitle>Base Stats</CardTitle>
             </CardHeader>
             <CardContent className="w-full h-full max-h-[300px]">
-              <ResponsiveRadar
-                data={baseStats}
-                keys={["stat"]}
-                indexBy="stat_name"
-                margin={{ top: 40, right: 40, bottom: 40, left: 40 }}
-                gridShape="linear"
-                maxValue={255}
-                borderWidth={0}
-                gridLabelOffset={10}
-                colors={{ scheme: "pastel1" }}
-                theme={{
-                  grid: {
-                    line: {
-                      opacity: 0.2,
-                    },
-                  },
-                }}
-                fillOpacity={0.45}
-                enableDots={false}
-                motionConfig="wobbly"
-                gridLabel={({ id, x, y, anchor, angle }) => (
-                  <g transform={`translate(${x}, ${y})`}>
-                    <g
-                      transform={`translate(${
-                        anchor === "end" ? -40 : anchor === "middle" ? -20 : 0
-                      }, ${angle === 90 ? 10 : angle === -90 ? 0 : 5})`}
-                    >
-                      <text className="font-medium text-sm fill-current">
-                        {id}
-                      </text>
-                    </g>
-                  </g>
-                )}
-                sliceTooltip={({ index, data }) => (
-                  <Card className="p-0">
-                    <CardHeader className="p-2 pb-0">
-                      <CardTitle className="text-lg">{index}</CardTitle>
-                    </CardHeader>
-                    <CardContent className="p-2 pt-0">
-                      {data.map((datum) => [datum.formattedValue])}
-                    </CardContent>
-                  </Card>
-                )}
-              />
+              <RadarChart data={baseStats} />
             </CardContent>
           </Card>
           <Card>

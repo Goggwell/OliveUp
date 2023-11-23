@@ -12,7 +12,7 @@ export const CardImage = ({ src, alt }: { src: string; alt: string }) => {
     <>
       <Skeleton
         className={cn(
-          "block h-14 w-14 rounded-full",
+          "block h-14 w-14 rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
           reveal ? "hidden" : "visible"
         )}
       />
