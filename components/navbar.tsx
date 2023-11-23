@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { Logo } from "@/components/logo";
 import { Search } from "@/components/search";
-import { Input } from "@/components/ui/input";
 import { usePathname } from "next/navigation";
 import { ThemeToggle } from "@/components/themeToggle";
 
