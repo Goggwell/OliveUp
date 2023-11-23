@@ -1,7 +1,8 @@
 import { ResponsiveRadar } from "@nivo/radar";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { ParsedBaseStats } from "@/lib/types";
 
-export const RadarChart = ({ data }: { data: Record<string, unknown>[] }) => {
+export const RadarChart = ({ data }: { data: ParsedBaseStats }) => {
   return (
     <ResponsiveRadar
       data={data}
@@ -28,9 +29,12 @@ export const RadarChart = ({ data }: { data: Record<string, unknown>[] }) => {
           <g
             transform={`translate(${
               anchor === "end" ? -40 : anchor === "middle" ? -20 : 0
-            }, ${angle === 90 ? 10 : angle === -90 ? 0 : 5})`}
+            }, ${angle === 90 ? 10 : angle === -90 ? -10 : 5})`}
           >
             <text className="font-medium text-sm fill-current">{id}</text>
+            <text className="font-medium text-sm fill-current translate-y-4">
+              {data.find((o) => o.stat_name === id)?.stat}
+            </text>
           </g>
         </g>
       )}
