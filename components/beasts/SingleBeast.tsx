@@ -74,7 +74,7 @@ export default function SingleBeast({ name }: { name: string }) {
             <CardHeader>
               <CardTitle>Base Stats</CardTitle>
             </CardHeader>
-            <CardContent className="w-full h-full max-h-[300px]">
+            <CardContent className="w-full h-full max-h-[300px] max-w-[400px]">
               <RadarChart data={baseStats} />
             </CardContent>
           </Card>
