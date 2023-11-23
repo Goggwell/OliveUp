@@ -1,7 +1,5 @@
 "use client";
 
-import Link from "next/link";
-import { ThemeToggle } from "@/components/themeToggle";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState, useEffect } from "react";
 import {
@@ -18,20 +16,17 @@ import { CardSkeleton } from "@/components/cardSkeleton";
 import { CardImage } from "@/components/cardImage";
 import { Logo } from "@/components/logo";
 import { Monster } from "@/lib/types";
+import { getFromCache } from "@/lib/utils";
 
 export default function SingleBeast({ name }: { name: string }) {
   const queryClient = useQueryClient();
-
-  const getFromCache = (key: string) => {
-    return queryClient.getQueryData([key]);
-  };
 
   const { data, isLoading, isFetching, isPending, isRefetching } = useQuery(
     {
       queryKey: [`getSingleBeast/${name}`],
       networkMode: "offlineFirst",
       queryFn: async (arg) => {
-        const cache = getFromCache(`getSingleBeast/${name}`);
+        const cache = getFromCache(`getSingleBeast/${name}`, queryClient);
         if (cache) return cache;
 
         const res = await fetch(

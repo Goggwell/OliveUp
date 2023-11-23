@@ -5,7 +5,7 @@ import {
 } from "@tanstack/react-query";
 import SingleBeast from "@/components/beasts/SingleBeast";
 import { Monster } from "@/lib/types";
-import { dayInMS } from "@/lib/utils";
+import { dayInMS, getFromCache } from "@/lib/utils";
 
 export const runtime = "edge";
 export const revalidate = dayInMS;
@@ -17,14 +17,10 @@ export default async function SingleBeastPage({
 }) {
   const queryClient = new QueryClient();
 
-  const getFromCache = (key: string) => {
-    return queryClient.getQueryData([key]);
-  };
-
   await queryClient.prefetchQuery({
     queryKey: [`getSingleBeast/${params.name}`],
     queryFn: async (arg) => {
-      const cache = getFromCache(`getBeasts/${params.name}`);
+      const cache = getFromCache(`getBeasts/${params.name}`, queryClient);
       if (cache) return cache;
 
       const res = await fetch(
