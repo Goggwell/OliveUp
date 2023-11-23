@@ -1,27 +1,17 @@
 "use client";
 
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useState, useEffect } from "react";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { CardSkeleton } from "@/components/cardSkeleton";
 import { CardImage } from "@/components/cardImage";
-import { Logo } from "@/components/logo";
-import { Monster } from "@/lib/types";
+import { Monster, ParsedBaseStats } from "@/lib/types";
 import { getFromCache } from "@/lib/utils";
+import { ResponsiveRadar } from "@nivo/radar";
 
 export default function SingleBeast({ name }: { name: string }) {
   const queryClient = useQueryClient();
 
-  const { data, isLoading, isFetching, isPending, isRefetching } = useQuery(
+  const { data } = useQuery(
     {
       queryKey: [`getSingleBeast/${name}`],
       networkMode: "offlineFirst",
@@ -42,15 +32,22 @@ export default function SingleBeast({ name }: { name: string }) {
   );
 
   const fetchedData: Monster = data[0];
+  const baseStatKeys = Object.keys(fetchedData.base_stats!);
+  const baseStatValues = Object.values(fetchedData.base_stats!);
+  let baseStats: ParsedBaseStats = [];
+  baseStatKeys.forEach((key, i) => {
+    const baseStatValue = {
+      stat_name: key,
+      stat: baseStatValues[i],
+    };
+    baseStats.push(baseStatValue);
+  });
 
   return (
     <section className="w-full h-full flex flex-col gap-4 pb-6">
       <div className="flex flex-col gap-2">
         <h1 className="text-4xl md:text-6xl tracking-tight font-semibold">
           {fetchedData.name}
-          {/* <span className="text-base md:text-lg opacity-50 font-normal tracking-normal">
-            #{fetchedData.beastid}
-          </span> */}
         </h1>
         <div className="flex gap-1">
           <Badge>{fetchedData.type}</Badge>
@@ -66,7 +63,57 @@ export default function SingleBeast({ name }: { name: string }) {
               />
             </div>
           </Card>
-          <Card className="md:col-span-2 md:row-span-2"></Card>
+          <Card className="md:col-span-2 md:row-span-2">
+            <CardHeader>
+              <CardTitle>Base Stats</CardTitle>
+            </CardHeader>
+            <CardContent className="w-full h-full max-h-[300px]">
+              <ResponsiveRadar
+                data={baseStats}
+                keys={["stat"]}
+                indexBy="stat_name"
+                margin={{ top: 40, right: 40, bottom: 40, left: 40 }}
+                gridShape="linear"
+                maxValue={255}
+                borderWidth={0}
+                gridLabelOffset={10}
+                colors={{ scheme: "pastel1" }}
+                theme={{
+                  grid: {
+                    line: {
+                      opacity: 0.2,
+                    },
+                  },
+                }}
+                fillOpacity={0.45}
+                enableDots={false}
+                motionConfig="wobbly"
+                gridLabel={({ id, x, y, anchor, angle }) => (
+                  <g transform={`translate(${x}, ${y})`}>
+                    <g
+                      transform={`translate(${
+                        anchor === "end" ? -40 : anchor === "middle" ? -20 : 0
+                      }, ${angle === 90 ? 10 : angle === -90 ? 0 : 5})`}
+                    >
+                      <text className="font-medium text-sm fill-current">
+                        {id}
+                      </text>
+                    </g>
+                  </g>
+                )}
+                sliceTooltip={({ index, data }) => (
+                  <Card className="p-0">
+                    <CardHeader className="p-2 pb-0">
+                      <CardTitle className="text-lg">{index}</CardTitle>
+                    </CardHeader>
+                    <CardContent className="p-2 pt-0">
+                      {data.map((datum) => [datum.formattedValue])}
+                    </CardContent>
+                  </Card>
+                )}
+              />
+            </CardContent>
+          </Card>
           <Card>
             <CardContent className="pt-6">
               <p>{fetchedData.description}</p>

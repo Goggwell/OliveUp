@@ -18,6 +18,11 @@ export type BaseStats = {
   speed: number;
 };
 
+export type ParsedBaseStats = {
+  stat_name: string;
+  stat: number;
+}[];
+
 export type Images = {
   standard: string | null;
   animated: string | null;
