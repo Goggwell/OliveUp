@@ -97,7 +97,11 @@ export default function Beasts() {
                   </div>
                 </CardContent>
                 <CardFooter>
-                  <Badge>{beast.type}</Badge>
+                  <Badge
+                    style={{ backgroundColor: `hsl(var(--${beast.type}))` }} // tailwind can't load dynamic classes
+                  >
+                    {beast.type}
+                  </Badge>
                 </CardFooter>
               </Card>
             </Link>
