@@ -62,7 +62,7 @@ export default function SingleBeast({ name }: { name: string }) {
         </div>
       </div>
       <div>
-        <section className="w-full grid min-[470px]:grid-cols-2 md:grid-cols-3 gap-4">
+        <section className="w-full grid md:grid-cols-3 gap-4">
           <Card className="relative py-4">
             <div className="w-full h-full min-h-[5rem] min-w-[5rem] grid items-center relative">
               <CardImage
