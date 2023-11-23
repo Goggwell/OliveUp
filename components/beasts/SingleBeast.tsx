@@ -39,9 +39,9 @@ export default function SingleBeast({ name }: { name: string }) {
     queryClient
   );
 
-  const fetchedData: Monster = data[0];
-  const baseStatKeys = Object.keys(fetchedData.base_stats!);
-  const baseStatValues = Object.values(fetchedData.base_stats!);
+  const beast: Monster = data[0];
+  const baseStatKeys = Object.keys(beast.base_stats!);
+  const baseStatValues = Object.values(beast.base_stats!);
   let baseStats: ParsedBaseStats = [];
   baseStatKeys.forEach((key, i) => {
     const baseStatValue = {
@@ -55,20 +55,19 @@ export default function SingleBeast({ name }: { name: string }) {
     <section className="w-full h-full flex flex-col gap-4 pb-6">
       <div className="flex flex-col gap-2">
         <h1 className="text-4xl md:text-6xl tracking-tight font-semibold">
-          {fetchedData.name}
+          {beast.name}
         </h1>
         <div className="flex gap-1">
-          <Badge>{fetchedData.type}</Badge>
+          <Badge style={{ backgroundColor: `hsl(var(--${beast.type}))` }}>
+            {beast.type}
+          </Badge>
         </div>
       </div>
       <div>
         <section className="w-full grid md:grid-cols-3 gap-4">
           <Card className="relative py-4">
             <div className="w-full h-full min-h-[5rem] min-w-[5rem] grid items-center relative">
-              <CardImage
-                src={fetchedData.images!.animated!}
-                alt={fetchedData.name!}
-              />
+              <CardImage src={beast.images!.animated!} alt={beast.name!} />
             </div>
           </Card>
           <Card className="md:col-span-2 md:row-span-2">
@@ -81,7 +80,7 @@ export default function SingleBeast({ name }: { name: string }) {
           </Card>
           <Card>
             <CardContent className="pt-6">
-              <p>{fetchedData.description}</p>
+              <p>{beast.description}</p>
             </CardContent>
           </Card>
         </section>
