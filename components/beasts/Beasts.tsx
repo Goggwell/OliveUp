@@ -70,7 +70,7 @@ export default function Beasts() {
 
   return (
     <>
-      <ul className="grid gap-4 min-[470px]:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      <ul className="grid gap-4 min-[470px]:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 pb-4">
         {(isLoading || isFetching || isRefetching || isPending) && (
           <>
             <CardSkeleton />
