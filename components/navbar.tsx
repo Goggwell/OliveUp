@@ -18,7 +18,8 @@ export const Navbar = () => {
         </Link>
       </div>
       <div className="flex gap-4">
-        {pathname.includes("beasts") && <Search />}
+        {/* exact match so we don't target nested routes */}
+        {pathname.match(/^\/beasts$/i) && <Search />}
         <ThemeToggle />
       </div>
     </div>
