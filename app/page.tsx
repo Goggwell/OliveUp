@@ -16,7 +16,7 @@ export default async function Home() {
     <ul className="grid gap-4 min-[470px]:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
       {links.map((link) => (
         <li key={link.url}>
-          <Link href={link.url}>
+          <Link href={link.url} prefetch={false}>
             <Card className="relative overflow-clip auto-rows-fr h-full hover:border-indigo-600 hover:bg-indigo-600 hover:bg-opacity-30 hover:scale-105 transition">
               <CardHeader>
                 <div className="flex items-center justify-between">

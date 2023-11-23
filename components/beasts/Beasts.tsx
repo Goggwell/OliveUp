@@ -82,7 +82,7 @@ export default function Beasts() {
         )}
         {beasts?.map((beast) => (
           <li key={beast.beastid} ref={beast.id === beasts.length ? ref : null}>
-            <Link href={`/beasts/${beast.name}`}>
+            <Link href={`/beasts/${beast.name}`} prefetch={false}>
               <Card className="hover:border-indigo-600 hover:bg-indigo-600 hover:bg-opacity-30 hover:scale-105 transition">
                 <CardHeader>
                   <CardTitle>{beast.name}</CardTitle>
