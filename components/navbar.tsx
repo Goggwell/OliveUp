@@ -10,10 +10,12 @@ export const Navbar = () => {
   const pathname = usePathname();
 
   return (
-    <div className="flex h-fit items-center justify-between">
+    <div className="flex h-fit items-center justify-between py-6">
       <div>
-        <Link href="/" className="h-28 w-28 relative grid place-items-center">
-          <Logo />
+        <Link href="/">
+          <h1 className="tracking-tight text-3xl font-semibold bg-gradient-to-r from-purple-500 to-teal-500 w-fit text-transparent bg-clip-text">
+            oliveup
+          </h1>
         </Link>
       </div>
       <div className="flex gap-4">

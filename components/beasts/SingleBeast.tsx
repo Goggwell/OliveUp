@@ -53,10 +53,10 @@ export default function SingleBeast({ name }: { name: string }) {
 
   return (
     <section className="w-full h-full flex flex-col gap-4 pb-6">
-      <div className="flex flex-col gap-2">
-        <h1 className="text-4xl md:text-6xl tracking-tight font-semibold">
+      <div className="flex flex-col gap-4">
+        <h2 className="text-4xl md:text-5xl tracking-tight font-semibold">
           {beast.name}
-        </h1>
+        </h2>
         <div className="flex gap-1">
           <Badge style={{ backgroundColor: `hsl(var(--${beast.type}))` }}>
             {beast.type}
@@ -64,13 +64,13 @@ export default function SingleBeast({ name }: { name: string }) {
         </div>
       </div>
       <div>
-        <section className="w-full grid md:grid-cols-3 gap-4">
+        <section className="w-full grid md:grid-cols-2 lg:grid-cols-3 gap-4">
           <Card className="relative py-4">
             <div className="w-full h-full min-h-[5rem] min-w-[5rem] grid items-center relative">
               <CardImage src={beast.images!.animated!} alt={beast.name!} />
             </div>
           </Card>
-          <Card className="md:col-span-2 md:row-span-2">
+          <Card className="lg:row-span-2">
             <CardHeader>
               <CardTitle>Base Stats</CardTitle>
             </CardHeader>
@@ -78,7 +78,7 @@ export default function SingleBeast({ name }: { name: string }) {
               <RadarChart data={baseStats} />
             </CardContent>
           </Card>
-          <Card>
+          <Card className="lg:row-start-2 grid place-items-center">
             <CardContent className="pt-6">
               <p>{beast.description}</p>
             </CardContent>
